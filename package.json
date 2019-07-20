@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "build": "rm -rf build; tsc"
+  },
+  "devDependencies": {
+    "typescript": "^3.5.3"
+  }
+}
