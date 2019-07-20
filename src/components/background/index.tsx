@@ -100,7 +100,6 @@ class Background extends React.Component<Props, State> {
       offsetX = !offsetX;
     }
     this.setState({points});
-    console.log(points);
   }
 
   public render() {
