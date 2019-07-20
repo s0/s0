@@ -7,8 +7,10 @@ devDependencies:
   gulp-sourcemaps: 2.6.5
   gulp-tslint: 8.1.4_tslint@5.18.0
   gulp-typescript: 5.0.1_typescript@3.5.3
+  plugin-error: 1.0.1
   react: 16.8.6
   react-dom: 16.8.6_react@16.8.6
+  source-map-loader: 0.2.4
   tslint: 5.18.0_typescript@3.5.3
   typescript: 3.5.3
   webpack: 4.36.1_webpack@4.36.1
@@ -476,6 +478,12 @@ packages:
       node: '>= 0.10'
     resolution:
       integrity: sha1-HQqRS7Aldb7IqPOnTlCA9yssDGs=
+  /async/2.6.3:
+    dependencies:
+      lodash: 4.17.15
+    dev: true
+    resolution:
+      integrity: sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg==
   /atob/2.1.2:
     dev: true
     engines:
@@ -2186,6 +2194,10 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-7AO748wWnIhNqAuaty2ZWHkQHRSNfPVIsPIfwEOWO22AmaoVrWavlOcMR5nzTLNYvp36X220/maaRsrec1G65A==
+  /lodash/4.17.15:
+    dev: true
+    resolution:
+      integrity: sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
   /loose-envify/1.4.0:
     dependencies:
       js-tokens: 4.0.0
@@ -3226,6 +3238,15 @@ packages:
     dev: true
     resolution:
       integrity: sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==
+  /source-map-loader/0.2.4:
+    dependencies:
+      async: 2.6.3
+      loader-utils: 1.2.3
+    dev: true
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-OU6UJUty+i2JDpTItnizPrlpOIBLmQbWMuBg9q5bVtnHACqw1tn9nNwqJLbv0/00JjnJb/Ee5g5WS5vrRv7zIQ==
   /source-map-resolve/0.5.2:
     dependencies:
       atob: 2.1.2
@@ -3919,8 +3940,10 @@ specifiers:
   gulp-sourcemaps: ^2.6.5
   gulp-tslint: ^8.1.4
   gulp-typescript: ^5.0.1
+  plugin-error: ^1.0.1
   react: ^16.8.6
   react-dom: ^16.8.6
+  source-map-loader: ^0.2.4
   tslint: ^5.18.0
   typescript: ^3.5.3
   webpack: ^4.36.1

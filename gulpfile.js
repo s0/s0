@@ -4,6 +4,7 @@ var log = require("fancy-log");
 var sourcemaps = require('gulp-sourcemaps');
 var ts = require('gulp-typescript');
 var tslint = require('gulp-tslint');
+var PluginError = require('plugin-error');
 var webpack = require('webpack');
 
 var tsProject = ts.createProject('src/tsconfig.json');
@@ -41,13 +42,23 @@ gulp.task('webpack', function (callback) {
     entry: {
       bundle: "./.tmp/main.js",
     },
+    bail: true,
     output: {
       filename: "[name].js",
       path: __dirname + "/build/"
     },
     devtool: "source-map",
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          use: ["source-map-loader"],
+          enforce: "pre"
+        }
+      ]
+    }
   }, function (err, stats) {
-    if (err) throw new gutil.PluginError("webpack", err);
+    if (err) throw new PluginError("webpack", err);
     callback();
   });
 });
