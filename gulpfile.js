@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var clean = require('gulp-clean');
 var log = require("fancy-log");
+var sourcemaps = require('gulp-sourcemaps');
 var ts = require('gulp-typescript');
 var tslint = require('gulp-tslint');
 var webpack = require('webpack');
@@ -19,7 +20,9 @@ gulp.task('clean', function () {
 
 gulp.task('ts', function () {
   return tsProject.src()
+    .pipe(sourcemaps.init())
     .pipe(tsProject())
+    .pipe(sourcemaps.write())
     .on('error', handleError)
     .pipe(gulp.dest('.tmp/'));
 });
