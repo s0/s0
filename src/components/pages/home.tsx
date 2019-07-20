@@ -1,13 +1,20 @@
 import * as React from 'react';
+import styled from 'styled-components';
 
-class Home extends React.Component<{}, {}> {
+interface Props {
+  className?: string;
+}
+
+class Home extends React.Component<Props, {}> {
   public render() {
     return (
-      <div>
+      <div className={this.props.className}>
         Home
       </div>
     );
   }
 }
 
-export {Home as Home};
+export default styled(Home)`
+  color: #444;
+`
