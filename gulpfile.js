@@ -65,11 +65,11 @@ gulp.task('webpack', function (callback) {
 
 gulp.task('js', gulp.series(['ts', 'webpack']));
 
-gulp.task('html', function () {
-  return gulp.src(['src/**/*.html']).pipe(gulp.dest('build/'));
+gulp.task('static', function () {
+  return gulp.src(['src/**/*.html', 'src/**/*.png']).pipe(gulp.dest('build/'));
 });
 
-gulp.task('build', gulp.parallel(['js', 'html']));
+gulp.task('build', gulp.parallel(['js', 'static']));
 
 gulp.task('default', gulp.series(['clean', 'build']));
 

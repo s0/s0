@@ -1,7 +1,47 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 import Background from '../background';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 23px;
+    font-weight: 400;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  h1, h2, h3, h4 {
+    margin: 0;
+    padding: 0;
+    font-weight: 500;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  p {
+    font-size: 17px;
+
+    a {
+      color: inherit;
+      opacity: 0.7;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+`
 
 interface Props {
   className?: string;
@@ -11,13 +51,91 @@ class Home extends React.Component<Props, {}> {
   public render() {
     return (
       <div className={this.props.className}>
-        <Background/>
-        Home
+        <GlobalStyle/>
+        <Background className="background" />
+        <div className="content">
+          <div className="inner">
+            <div className="container">
+              <div className="top">
+                <img src="images/sam_250x2.png" height="250" />
+                <div>
+                  <h1>Sam Lanning</h1>
+                  <h2>Software Engineer - Developer Advocate - Speaker - Lighting Designer</h2>
+                  <p>Core Interests: Open Source Software, Security &amp; Privacy, Code Quality, Variant Analysis, Lighting &amp; TypeScript</p>
+                  <p>Developer Advocate for <a href="https://semmle.com" target="_blank">Semmle</a></p>
+                  <p>
+                    <a href="https://github.com/samlanning" target="_blank">GitHub</a> - <a href="https://www.npmjs.com/~samlanning" target="_blank">NPM</a> - <a href="https://twitter.com/samlanning" target="_blank">Twitter</a> - <a href="https://www.linkedin.com/in/smlanning/" target="_blank">LinkedIn</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
+const SPACING = 10;
+
 export default styled(Home)`
   color: #444;
+
+  > .background {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  > .content {
+    pointer-events: none;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    > .inner {
+      width: 100%;
+      padding: 20px;
+
+      > .container {
+        pointer-events: all;
+        display: flex;
+        flex-direction: column;
+        max-width: 800px;
+        margin: 0 auto;
+        background: rgba(187, 80, 185, 0.44);
+        border: 2px solid rgba(187, 80, 185, 1);
+        border-radius: 5px;
+        padding: ${SPACING}px;
+        color: #fff;
+
+        > .top {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+          padding: ${SPACING / 2}px;
+
+          > img {
+            border-radius: 5px;
+            margin: ${SPACING / 2}px;
+          }
+
+          > div {
+            margin: ${SPACING / 2}px;
+            flex-grow: 1;
+            flex-basis: 400px;
+            h1, h2 {
+              
+            }
+          }
+        }
+      }
+    }
+  }
 `
