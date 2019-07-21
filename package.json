@@ -20,5 +20,9 @@
     "tslint": "^5.18.0",
     "typescript": "^3.5.3",
     "webpack": "^4.36.1"
+  },
+  "dependencies": {
+    "@types/animejs": "^2.0.2",
+    "animejs": "^3.0.1"
   }
 }

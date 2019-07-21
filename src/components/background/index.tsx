@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import anime from 'animejs';
 
 /**
  * Return true if 2 numbers are "close enough"
@@ -23,12 +24,14 @@ interface Point {
   currentX: number;
   currentY: number;
   svg: SVGCircleElement;
+  animation?: anime.AnimeInstance;
 }
 
 interface Line {
   p1: Point;
   p2: Point;
   svg: SVGLineElement;
+  animation?: anime.AnimeInstance;
 }
 
 class Background extends React.Component<Props, {}> {
@@ -206,15 +209,40 @@ class Background extends React.Component<Props, {}> {
             point.currentY += dy / distance * push;
           }
           if (!closeEnough(point.svg.cx.baseVal.value, point.currentX) || !closeEnough(point.svg.cy.baseVal.value, point.currentY)) {
-            point.svg.cx.baseVal.value = point.currentX;
-            point.svg.cy.baseVal.value = point.currentY;
+            // if (point.animation) point.animation.pause();
+            anime.remove(point.svg)
+            point.animation = anime({
+              targets: point.svg,
+              cx: point.currentX,
+              cy: point.currentY,
+              easing: 'cubicBezier(0.0, 0.0, 0.2, 1)',
+              duration: 300
+            });
+            point.animation.pause();
+            point.animation.seek(20);
+            point.animation.play();
           }
         }
         for (const line of this.data.lines) {
-          if (!closeEnough(line.svg.x1.baseVal.value, line.p1.currentX)) line.svg.x1.baseVal.value = line.p1.currentX;
-          if (!closeEnough(line.svg.y1.baseVal.value, line.p1.currentY)) line.svg.y1.baseVal.value = line.p1.currentY;
-          if (!closeEnough(line.svg.x2.baseVal.value, line.p2.currentX)) line.svg.x2.baseVal.value = line.p2.currentX;
-          if (!closeEnough(line.svg.y2.baseVal.value, line.p2.currentY)) line.svg.y2.baseVal.value = line.p2.currentY;
+          if (!closeEnough(line.svg.x1.baseVal.value, line.p1.currentX) ||
+              !closeEnough(line.svg.y1.baseVal.value, line.p1.currentY) ||
+              !closeEnough(line.svg.x2.baseVal.value, line.p2.currentX) ||
+              !closeEnough(line.svg.y2.baseVal.value, line.p2.currentY)) {
+            // if (line.animation) line.animation.pause();
+            anime.remove(line.svg)
+            line.animation = anime({
+              targets: line.svg,
+              x1: line.p1.currentX,
+              y1: line.p1.currentY,
+              x2: line.p2.currentX,
+              y2: line.p2.currentY,
+              easing: 'cubicBezier(0.0, 0.0, 0.2, 1)',
+              duration: 300
+            })
+            line.animation.pause();
+            line.animation.seek(20);
+            line.animation.play();
+          }
         }
       }
     }
