@@ -7,8 +7,23 @@ interface Props {
 
 interface Point {
   key: string;
-  x: number;
-  y: number;
+  xBase: number;
+  yBase: number;
+  /**
+   * How much the point is "wobbling" in pixels
+   */
+  wobble: number;
+  /**
+   * between 0 and 2PI
+   */
+  xWobble: number;
+  /**
+   * between 0 and 2PI
+   */
+  yWobble: number;
+
+  xResult: number;
+  yResult: number;
 }
 
 interface Line {
@@ -103,8 +118,14 @@ class Background extends React.Component<Props, State> {
           x < xMax;
           xi++, x += xInterval) {
         const key = `${xi},${yi}`
+        const wobble = xInterval / 6;
+        const xWobble = Math.random() * Math.PI * 2, yWobble = Math.random() * Math.PI * 2
         const point: Point = {
-          key, x, y
+          key,
+          xBase: x, yBase: y,
+          wobble, xWobble, yWobble,
+          xResult: x + wobble * Math.sin(xWobble),
+          yResult: y + wobble * Math.sin(yWobble)
         }
         points.push(point);
         pointsMap.set(key, point);
@@ -134,7 +155,7 @@ class Background extends React.Component<Props, State> {
             { /* Points */ }
             {
               ...this.state.points.map(p => 
-                <circle key={p.key} cx={p.x} cy={p.y} />  
+                <circle key={p.key} cx={p.xResult} cy={p.yResult} />  
               )
             }
           </g>
@@ -142,7 +163,7 @@ class Background extends React.Component<Props, State> {
             { /* Lines */}
             {
               ...this.state.lines.map(l =>
-                <line x1={l.p1.x} y1={l.p1.y} x2={l.p2.x} y2={l.p2.y} />
+                <line x1={l.p1.xResult} y1={l.p1.yResult} x2={l.p2.xResult} y2={l.p2.yResult} />
               )
             }
           </g>
