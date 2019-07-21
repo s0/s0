@@ -83,10 +83,12 @@ class Background extends React.Component<Props, {}> {
     svg: SVGElement | null;
     points: SVGGElement | null;
     lines: SVGGElement | null;
+    bg: SVGRectElement | null;
   } = {
     svg: null,
     points: null,
     lines: null,
+    bg: null,
   }
   private data: {
     points: Map<string, Point>;
@@ -138,7 +140,8 @@ class Background extends React.Component<Props, {}> {
   }
 
   public createElements() {
-    if (!this.ref.svg || !this.ref.points || !this.ref.lines) return;
+    if (!this.ref.svg || !this.ref.points || !this.ref.lines || !this.ref.bg) return;
+
     // clear old elements
     if (this.data) {
       this.data.points.forEach(point => point.svg.remove());
@@ -146,6 +149,9 @@ class Background extends React.Component<Props, {}> {
     }
 
     const sizing = this.ref.svg.getBoundingClientRect();
+    this.ref.bg.width.baseVal.value = sizing.width;
+    this.ref.bg.height.baseVal.value = sizing.height;
+
     /**
      * How spread out each dot is along the X
      */
@@ -305,7 +311,7 @@ class Background extends React.Component<Props, {}> {
             <g className="lines" ref={ref => this.ref.lines = ref} />
           </mask>
           <g className="gridLayers" mask='url(#grid)'>
-            <rect className="bg" />
+            <rect className="bg" ref={ref => this.ref.bg = ref} />
             <rect className="shine" />
           </g>
         </svg>
@@ -359,8 +365,6 @@ export default styled(Background)`
 
     .gridLayers {
       > .bg {
-        width: 100%;
-        height: 100%;
         x: 0;
         y: 0;
         fill: rgba(177, 0, 174, 0.49);
