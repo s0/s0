@@ -371,9 +371,9 @@ export default styled(Background)`
       }
 
       > .shine {
-        x: -20%;
+        x: -40%;
         y: 0;
-        width: 20%;
+        width: 40%;
         height: 100%;
         fill: url(#shine);
         animation: shine-move 5s linear infinite;
