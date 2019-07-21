@@ -1,44 +1,50 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
+const SVG_XMLNS = "http://www.w3.org/2000/svg";
+
 interface Props {
   className?: string;
 }
 
 interface Point {
-  key: string;
   x: number;
   y: number;
+  svg: SVGCircleElement;
 }
 
 interface Line {
   p1: Point;
   p2: Point;
+  svg: SVGLineElement;
 }
 
-interface State {
-  points: Point[];
-  lines: Line[];
-}
-
-class Background extends React.Component<Props, State> {
+class Background extends React.Component<Props, {}> {
 
   private resizeAnimationFrameRequest: number | null = 0;
-  private svgRef: SVGElement | null = null;
+  private readonly ref: {
+    svg: SVGElement | null;
+    points: SVGGElement | null;
+    lines: SVGGElement | null;
+  } = {
+    svg: null,
+    points: null,
+    lines: null,
+  }
+  private data: {
+    points: Map<string, Point>;
+    lines: Line[];
+  } | null = null;
 
   public constructor(props: Props) {
     super(props);
-    this.state = {
-      points: [],
-      lines: []
-    };
 
-    this.calculatePoints = this.calculatePoints.bind(this);
-    this.resized = this.calculatePoints.bind(this);
+    this.createElements = this.createElements.bind(this);
+    this.resized = this.resized.bind(this);
   }
 
   public componentDidMount() {
-    this.calculatePoints();
+    this.createElements();
     window.addEventListener('resize', this.resized);
   }
 
@@ -52,12 +58,18 @@ class Background extends React.Component<Props, State> {
   public resized() {
     if (this.resizeAnimationFrameRequest)
       cancelAnimationFrame(this.resizeAnimationFrameRequest);
-    this.resizeAnimationFrameRequest = requestAnimationFrame(this.calculatePoints);
+    this.resizeAnimationFrameRequest = requestAnimationFrame(this.createElements);
   }
 
-  public calculatePoints() {
-    if (!this.svgRef) return;
-    const sizing = this.svgRef.getBoundingClientRect();
+  public createElements() {
+    if (!this.ref.svg || !this.ref.points || !this.ref.lines) return;
+    // clear old elements
+    if (this.data) {
+      this.data.points.forEach(point => point.svg.remove());
+      this.data.lines.forEach(line => line.svg.remove());
+    }
+
+    const sizing = this.ref.svg.getBoundingClientRect();
     /**
      * How spread out each dot is along the X
      */
@@ -94,8 +106,7 @@ class Background extends React.Component<Props, State> {
     const yMax = sizing.height + yPadding;
 
     // Produce the points and lines
-    const points: Point[] = [];
-    const pointsMap = new Map<String, Point>();
+    const points = new Map<string, Point>();
     const lines: Line[] = [];
     let xi:number, yi = 0;
     while (y < yMax) {
@@ -105,19 +116,29 @@ class Background extends React.Component<Props, State> {
           xi++, x += xInterval) {
         const key = `${xi},${yi}`
         const point: Point = {
-          key,
           x: x + (Math.random() - 0.5) * skew,
           y: y + (Math.random() - 0.5) * skew,
+          svg: document.createElementNS(SVG_XMLNS, 'circle')
         }
-        points.push(point);
-        pointsMap.set(key, point);
+        point.svg.setAttribute('cx', point.x.toString());
+        point.svg.setAttribute('cy', point.y.toString());
+        this.ref.points.appendChild(point.svg);
+        points.set(key, point);
         // Add lines to (potentially) pre-existing points
         for (const k of [`${xi - 1},${yi}`, `${xi},${yi - 1}`, `${xi + (offsetX ? 1 : -1)},${yi - 1}`]) {
-          const p2 = pointsMap.get(k);
+          const p2 = points.get(k);
           if (p2) {
+            const line = document.createElementNS(SVG_XMLNS, 'line');
             lines.push({
-              p1: point, p2
-            })
+              p1: point,
+              p2,
+              svg: line
+            });
+            line.setAttribute('x1', point.x.toString());
+            line.setAttribute('y1', point.y.toString());
+            line.setAttribute('x2', p2.x.toString());
+            line.setAttribute('y2', p2.y.toString());
+            this.ref.lines.appendChild(line);
           }
         }
       }
@@ -125,30 +146,20 @@ class Background extends React.Component<Props, State> {
       yi++;
       offsetX = !offsetX;
     }
-    this.setState({ points, lines});
+
+    this.data = {
+      lines,
+      points
+    }
   }
 
   public render() {
     return (
       <div className={this.props.className}>
-        <svg ref={ref => this.svgRef = ref}>
+        <svg ref={ref => this.ref.svg = ref}>
 
-          <g className="points">
-            { /* Points */ }
-            {
-              ...this.state.points.map(p => 
-                <circle key={p.key} cx={p.x} cy={p.y} />
-              )
-            }
-          </g>
-          <g className="lines">
-            { /* Lines */}
-            {
-              ...this.state.lines.map(l =>
-                <line x1={l.p1.x} y1={l.p1.y} x2={l.p2.x} y2={l.p2.y} />
-              )
-            }
-          </g>
+          <g className="points" ref={ref => this.ref.points = ref} />
+          <g className="lines" ref={ref => this.ref.lines = ref} />
         </svg>
       </div>
     );
