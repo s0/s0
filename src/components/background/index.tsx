@@ -1,15 +1,27 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
+/**
+ * Return true if 2 numbers are "close enough"
+ */
+function closeEnough(a: number, b: number) {
+  return Math.abs(a - b) < 0.1;
+}
+
 const SVG_XMLNS = "http://www.w3.org/2000/svg";
+
+const AFFECT_DISTANCE = 200;
+const PUSH_DISTANCE = 50;
 
 interface Props {
   className?: string;
 }
 
 interface Point {
-  x: number;
-  y: number;
+  baseX: number;
+  baseY: number;
+  currentX: number;
+  currentY: number;
   svg: SVGCircleElement;
 }
 
@@ -22,6 +34,7 @@ interface Line {
 class Background extends React.Component<Props, {}> {
 
   private resizeAnimationFrameRequest: number | null = 0;
+  private frameAnimationFrameRequest: number | null = 0;
   private readonly ref: {
     svg: SVGElement | null;
     points: SVGGElement | null;
@@ -36,20 +49,31 @@ class Background extends React.Component<Props, {}> {
     lines: Line[];
   } | null = null;
 
+  // Mouse Data
+  private mouse: { x: number; y: number } | null = null;
+  private lastMouse: { x: number; y: number } | null = null;
+
   public constructor(props: Props) {
     super(props);
 
     this.createElements = this.createElements.bind(this);
     this.resized = this.resized.bind(this);
+    this.frame = this.frame.bind(this);
+    this.mouseMove = this.mouseMove.bind(this);
   }
 
   public componentDidMount() {
     this.createElements();
+    this.frame();
     window.addEventListener('resize', this.resized);
+    window.addEventListener('mousemove', this.mouseMove);
   }
 
   public componentWillUnmount() {
     window.removeEventListener('resize', this.resized);
+    window.removeEventListener('mousemove', this.mouseMove);
+    if (this.frameAnimationFrameRequest)
+      cancelAnimationFrame(this.frameAnimationFrameRequest);
   }
 
   /**
@@ -59,6 +83,13 @@ class Background extends React.Component<Props, {}> {
     if (this.resizeAnimationFrameRequest)
       cancelAnimationFrame(this.resizeAnimationFrameRequest);
     this.resizeAnimationFrameRequest = requestAnimationFrame(this.createElements);
+  }
+
+  public mouseMove(e: MouseEvent) {
+    this.mouse = {
+      x: e.pageX,
+      y: e.pageY
+    }
   }
 
   public createElements() {
@@ -114,14 +145,18 @@ class Background extends React.Component<Props, {}> {
           xi = 0, x = xMin + (offsetX ? xOffsetAmount : 0);
           x < xMax;
           xi++, x += xInterval) {
-        const key = `${xi},${yi}`
+        const key = `${xi},${yi}`;
+        const baseX = x + (Math.random() - 0.5) * skew;
+        const baseY = y + (Math.random() - 0.5) * skew;
         const point: Point = {
-          x: x + (Math.random() - 0.5) * skew,
-          y: y + (Math.random() - 0.5) * skew,
-          svg: document.createElementNS(SVG_XMLNS, 'circle')
+          baseX,
+          baseY,
+          svg: document.createElementNS(SVG_XMLNS, 'circle'),
+          currentX: baseX,
+          currentY: baseY
         }
-        point.svg.setAttribute('cx', point.x.toString());
-        point.svg.setAttribute('cy', point.y.toString());
+        point.svg.cx.baseVal.value = point.baseX;
+        point.svg.cy.baseVal.value = point.baseY;
         this.ref.points.appendChild(point.svg);
         points.set(key, point);
         // Add lines to (potentially) pre-existing points
@@ -134,10 +169,10 @@ class Background extends React.Component<Props, {}> {
               p2,
               svg: line
             });
-            line.setAttribute('x1', point.x.toString());
-            line.setAttribute('y1', point.y.toString());
-            line.setAttribute('x2', p2.x.toString());
-            line.setAttribute('y2', p2.y.toString());
+            line.x1.baseVal.value = point.baseX;
+            line.y1.baseVal.value = point.baseY;
+            line.x2.baseVal.value = p2.baseX;
+            line.y2.baseVal.value = p2.baseY;
             this.ref.lines.appendChild(line);
           }
         }
@@ -151,6 +186,39 @@ class Background extends React.Component<Props, {}> {
       lines,
       points
     }
+  }
+
+  public frame() {
+    if (!this.data) return;
+    // Adjust position of points (and hence lines)
+    if (this.mouse) {
+      if (!this.lastMouse || this.mouse.x !== this.lastMouse.x || this.mouse.y !== this.lastMouse.y) {
+        this.lastMouse = this.mouse;
+        for (const point of this.data.points.values()) {
+          const dx = point.baseX - this.mouse.x;
+          const dy = point.baseY - this.mouse.y;
+          const distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+          point.currentX = point.baseX;
+          point.currentY = point.baseY;
+          if (distance < AFFECT_DISTANCE) {
+            const push = (AFFECT_DISTANCE - distance) / AFFECT_DISTANCE * PUSH_DISTANCE;
+            point.currentX += dx / distance * push;
+            point.currentY += dy / distance * push;
+          }
+          if (!closeEnough(point.svg.cx.baseVal.value, point.currentX) || !closeEnough(point.svg.cy.baseVal.value, point.currentY)) {
+            point.svg.cx.baseVal.value = point.currentX;
+            point.svg.cy.baseVal.value = point.currentY;
+          }
+        }
+        for (const line of this.data.lines) {
+          if (!closeEnough(line.svg.x1.baseVal.value, line.p1.currentX)) line.svg.x1.baseVal.value = line.p1.currentX;
+          if (!closeEnough(line.svg.y1.baseVal.value, line.p1.currentY)) line.svg.y1.baseVal.value = line.p1.currentY;
+          if (!closeEnough(line.svg.x2.baseVal.value, line.p2.currentX)) line.svg.x2.baseVal.value = line.p2.currentX;
+          if (!closeEnough(line.svg.y2.baseVal.value, line.p2.currentY)) line.svg.y2.baseVal.value = line.p2.currentY;
+        }
+      }
+    }
+    this.frameAnimationFrameRequest = requestAnimationFrame(this.frame);
   }
 
   public render() {
