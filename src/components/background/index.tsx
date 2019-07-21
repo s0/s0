@@ -130,18 +130,22 @@ class Background extends React.Component<Props, State> {
       <div className={this.props.className}>
         <svg ref={ref => this.svgRef = ref}>
 
-          { /* Points */ }
-          {
-            ...this.state.points.map(p => 
-              <circle key={p.key} cx={p.x} cy={p.y} r="3" fill='#000' />  
-            )
-          }
-          { /* Lines */}
-          {
-            ...this.state.lines.map(l =>
-              <line x1={l.p1.x} y1={l.p1.y} x2={l.p2.x} y2={l.p2.y} stroke='#000' />
-            )
-          }
+          <g className="points">
+            { /* Points */ }
+            {
+              ...this.state.points.map(p => 
+                <circle key={p.key} cx={p.x} cy={p.y} />  
+              )
+            }
+          </g>
+          <g className="lines">
+            { /* Lines */}
+            {
+              ...this.state.lines.map(l =>
+                <line x1={l.p1.x} y1={l.p1.y} x2={l.p2.x} y2={l.p2.y} />
+              )
+            }
+          </g>
         </svg>
       </div>
     );
@@ -159,5 +163,15 @@ export default styled(Background)`
   svg {
     width: 100%;
     height: 100%;
+
+    .points circle {
+      fill: #222;
+      r: 5px;
+    }
+
+    .lines line {
+      stroke-width: 2px;
+      stroke: #333;
+    }
   }
 `;
