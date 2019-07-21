@@ -86,22 +86,42 @@ class Home extends React.Component<Props, {}> {
                 </ul>
               </div>
               <div className="section">
+                <h2>Career</h2>
+                <ul className="bolded">
+                  <li>
+                    <strong>2011 - 2014</strong> - Computer Science Bachelor's Degree, University of Oxford.
+                  </li>
+                  <li>
+                    <strong>Feb 2012 - Feb 2014</strong> - Spend 1 year as Secretary, and 1 year as President of the Oxford University Computer Society
+                  </li>
+                  <li>
+                    <strong>Nov 2014 - Jul 2015</strong> - Computer Science Specialist Tutor @ <a href="https://www.lvs-oxford.org.uk/" target="_blank">LVS Oxford</a> - a school for young people / children on the autistic spectrum
+                  </li>
+                  <li>
+                    <strong>Oct 2014 - Mar 2018</strong> - Software Engineer @ <a href="https://semmle.com" target="_blank">Semmle</a>
+                  </li>
+                  <li>
+                    <strong>Mar 2018 - Present</strong> - Developer Advocate @ <a href="https://semmle.com" target="_blank">Semmle</a>
+                  </li>
+                </ul>
+              </div>
+              <div className="section">
                 <h2>Public Speaking</h2>
                 <ul>
                   <li>
                     Jan 2017 - Noisebridge 5MOF - <a href="https://www.youtube.com/watch?v=egsswPi8yio" target="_blank">Lights &amp; Music (Video)</a>
                   </li>
                   <li>
-                    October 2018 - GitHub Universe Demo Desk - <a href="https://www.youtube.com/watch?v=aXqUWZYlFzs" target="_blank">Finding and preventing bugs with LGTM (Video)</a>
+                    Oct 2018 - GitHub Universe Demo Desk - <a href="https://www.youtube.com/watch?v=aXqUWZYlFzs" target="_blank">Finding and preventing bugs with LGTM (Video)</a>
                   </li>
                   <li>
                     May 2019 - RVAsec - <a href="https://rvasec2019.sched.com/event/OAyv/no-more-whack-a-mole-how-to-find-and-prevent-entire-classes-of-security-vulnerabilities" target="_blank">No More Whack-a-Mole: How to Find and Prevent Entire Classes of Security Vulnerabilities</a>
                   </li>
                   <li>
-                    July 2019 - OSCON - <a href="https://conferences.oreilly.com/oscon/oscon-or/public/schedule/detail/75948" target="_blank">How TypeScript is transforming the JavaScript ecosystem</a>
+                    Jul 2019 - OSCON - <a href="https://conferences.oreilly.com/oscon/oscon-or/public/schedule/detail/75948" target="_blank">How TypeScript is transforming the JavaScript ecosystem</a>
                   </li>
                   <li>
-                    July 2019 - OSCON - <a href="https://conferences.oreilly.com/oscon/oscon-or/public/schedule/detail/75953" target="_blank">Writing npm (JavaScript) libraries using TypeScript</a>
+                    Jul 2019 - OSCON - <a href="https://conferences.oreilly.com/oscon/oscon-or/public/schedule/detail/75953" target="_blank">Writing npm (JavaScript) libraries using TypeScript</a>
                   </li>
                 </ul>
               </div>
@@ -182,6 +202,14 @@ export default styled(Home)`
 
           ul {
             margin: ${SPACING}px 0 0;
+
+            &.bolded {
+              font-weight: 400;
+
+              strong {
+                font-weight: 500;
+              }
+            }
           }
         }
       }
