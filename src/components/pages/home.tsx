@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-family: 'Montserrat', sans-serif;
     font-size: 23px;
-    font-weight: 400;
+    font-weight: 500;
   }
 
   * {
@@ -29,16 +29,16 @@ const GlobalStyle = createGlobalStyle`
     font-size: 20px;
   }
 
-  p {
+  p, ul {
     font-size: 17px;
+  }
 
-    a {
-      color: inherit;
-      opacity: 0.7;
+  a {
+    color: inherit;
+    opacity: 0.7;
 
-      &:hover {
-        opacity: 1;
-      }
+    &:hover {
+      opacity: 1;
     }
   }
 `
@@ -70,6 +70,40 @@ class Home extends React.Component<Props, {}> {
                     Email: <a href="mailto:sam@lanni.ng">sam@lanni.ng</a>
                   </p>
                 </div>
+              </div>
+              <div className="section">
+                <h2>Current Endeavours</h2>
+                <ul>
+                  <li>
+                    <a href="https://synesthesia-project.org/" target="_blank">Synesthesia Project</a> - An open source lighting &amp; sound project
+                  </li>
+                  <li>
+                    <a href="https://queeriouslabs.com/" target="_blank">Queerious Labs</a> - A queer, anarchafeminist art+tech community workshop.
+                  </li>
+                  <li>
+                    Numerous <a href="https://github.com/samlanning" target="_blank">GitHub Repositories</a>.
+                  </li>
+                </ul>
+              </div>
+              <div className="section">
+                <h2>Public Speaking</h2>
+                <ul>
+                  <li>
+                    Jan 2017 - Noisebridge 5MOF - <a href="https://www.youtube.com/watch?v=egsswPi8yio" target="_blank">Lights &amp; Music (Video)</a>
+                  </li>
+                  <li>
+                    October 2018 - GitHub Universe Demo Desk - <a href="https://www.youtube.com/watch?v=aXqUWZYlFzs" target="_blank">Finding and preventing bugs with LGTM (Video)</a>
+                  </li>
+                  <li>
+                    May 2019 - RVAsec - <a href="https://rvasec2019.sched.com/event/OAyv/no-more-whack-a-mole-how-to-find-and-prevent-entire-classes-of-security-vulnerabilities" target="_blank">No More Whack-a-Mole: How to Find and Prevent Entire Classes of Security Vulnerabilities</a>
+                  </li>
+                  <li>
+                    July 2019 - OSCON - <a href="https://conferences.oreilly.com/oscon/oscon-or/public/schedule/detail/75948" target="_blank">How TypeScript is transforming the JavaScript ecosystem</a>
+                  </li>
+                  <li>
+                    July 2019 - OSCON - <a href="https://conferences.oreilly.com/oscon/oscon-or/public/schedule/detail/75953" target="_blank">Writing npm (JavaScript) libraries using TypeScript</a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -114,7 +148,7 @@ export default styled(Home)`
         background: rgba(187, 80, 185, 0.35);
         border: 2px solid rgba(187, 80, 185, 1);
         border-radius: 5px;
-        padding: ${SPACING}px;
+        padding: ${SPACING}px ${SPACING}px ${SPACING * 2}px;
         color: #fff;
 
         > .top {
@@ -138,6 +172,16 @@ export default styled(Home)`
               font-weight: 500;
               margin: ${SPACING}px 0 0;
             }
+          }
+        }
+
+        > .section {
+          h2 {
+            padding: ${SPACING * 2}px ${SPACING}px ${SPACING}px;
+          }
+
+          ul {
+            margin: ${SPACING}px 0 0;
           }
         }
       }
