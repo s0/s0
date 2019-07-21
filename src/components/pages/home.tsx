@@ -66,6 +66,9 @@ class Home extends React.Component<Props, {}> {
                   <p>
                     <a href="https://github.com/samlanning" target="_blank">GitHub</a> - <a href="https://www.npmjs.com/~samlanning" target="_blank">NPM</a> - <a href="https://twitter.com/samlanning" target="_blank">Twitter</a> - <a href="https://www.linkedin.com/in/smlanning/" target="_blank">LinkedIn</a>
                   </p>
+                  <p>
+                    Email: <a href="mailto:sam@lanni.ng">sam@lanni.ng</a>
+                  </p>
                 </div>
               </div>
             </div>
@@ -108,7 +111,7 @@ export default styled(Home)`
         flex-direction: column;
         max-width: 800px;
         margin: 0 auto;
-        background: rgba(187, 80, 185, 0.44);
+        background: rgba(187, 80, 185, 0.35);
         border: 2px solid rgba(187, 80, 185, 1);
         border-radius: 5px;
         padding: ${SPACING}px;
@@ -130,8 +133,10 @@ export default styled(Home)`
             margin: ${SPACING / 2}px;
             flex-grow: 1;
             flex-basis: 400px;
-            h1, h2 {
-              
+            p {
+              font-size: 16px;
+              font-weight: 500;
+              margin: ${SPACING}px 0 0;
             }
           }
         }
