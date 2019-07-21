@@ -436,6 +436,7 @@ class Background extends React.Component<Props, {}> {
 
 export default styled(Background)`
   background: #240152;
+  background: linear-gradient(#460152, #240152);
 
   @keyframes shine-move {
     0% {
