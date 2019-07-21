@@ -70,6 +70,19 @@ interface Ripple {
   }
 }
 
+interface LineFlash {
+  line: Line;
+  display?: {
+    svg: {
+      g: SVGGElement;
+      line: SVGLineElement;
+      circleA: SVGCircleElement;
+      circleB: SVGCircleElement;
+    };
+    opacity: number;
+  }
+}
+
 function advanceAnimation<P extends { [id: string]: number }>(target: Animated<P>, advanceMs: number) {
   if (target.animation) {
     target.animation.time += advanceMs;
@@ -98,6 +111,7 @@ class Background extends React.Component<Props, {}> {
     mouseLines: SVGGElement | null;
     bg: SVGRectElement | null;
     ripples: SVGGElement | null;
+    overlays: SVGGElement | null;
   } = {
     svg: null,
     points: null,
@@ -105,6 +119,7 @@ class Background extends React.Component<Props, {}> {
     mouseLines: null,
     bg: null,
     ripples: null,
+    overlays: null,
   }
   private data: {
     points: Map<string, Point>;
@@ -116,6 +131,7 @@ class Background extends React.Component<Props, {}> {
   private lastMouse: { x: number; y: number } | null = null;
   private lastFrame: number | null = null;
   private ripples = new Set<Ripple>();
+  private lineFlashes = new Set<LineFlash>();
 
   public constructor(props: Props) {
     super(props);
@@ -124,7 +140,6 @@ class Background extends React.Component<Props, {}> {
     this.resized = this.resized.bind(this);
     this.frame = this.frame.bind(this);
     this.mouseMove = this.mouseMove.bind(this);
-    this.mouseOverLine = this.mouseOverLine.bind(this);
   }
 
   public componentDidMount() {
@@ -157,11 +172,14 @@ class Background extends React.Component<Props, {}> {
     }
   }
 
-  private mouseOverLine(e: MouseEvent) {
+  private mouseOverLine(e: MouseEvent, line: Line) {
     this.ripples.add({
       x: e.pageX,
       y: e.pageY
     })
+    this.lineFlashes.add({
+      line
+    });
   }
 
   private createElements() {
@@ -238,7 +256,7 @@ class Background extends React.Component<Props, {}> {
         }
         point.svg.cx.baseVal.value = point.current.x;
         point.svg.cy.baseVal.value = point.current.y;
-        point.svg.r.baseVal.value = (parallax) * 6 + 4;
+        point.svg.r.baseVal.value = parallax * 6 + 4;
         this.ref.points.appendChild(point.svg);
         points.set(key, point);
         // Add lines to (potentially) pre-existing points
@@ -247,18 +265,19 @@ class Background extends React.Component<Props, {}> {
           if (p2) {
             const mask = document.createElementNS(SVG_XMLNS, 'line');
             const mouse = document.createElementNS(SVG_XMLNS, 'line');
-            lines.push({
+            const line = {
               p1: point,
               p2,
               svg: { mask, mouse }
-            });
+            }
+            lines.push(line);
             mask.x1.baseVal.value = mouse.x1.baseVal.value = point.current.x;
             mask.y1.baseVal.value = mouse.y1.baseVal.value = point.current.y;
             mask.x2.baseVal.value = mouse.x2.baseVal.value = p2.current.x;
             mask.y2.baseVal.value = mouse.y2.baseVal.value = p2.current.y;
             this.ref.lines.appendChild(mask);
             this.ref.mouseLines.appendChild(mouse);
-            mouse.addEventListener('mouseenter', this.mouseOverLine);
+            mouse.addEventListener('mouseenter', e => this.mouseOverLine(e, line));
           }
         }
       }
@@ -345,6 +364,42 @@ class Background extends React.Component<Props, {}> {
         }
       }
     })
+    // Add and animate line flashes
+    this.lineFlashes.forEach(flash => {
+      if (!this.ref.overlays) return;
+      if (!flash.display) {
+        flash.display = {
+          svg: {
+            g: document.createElementNS(SVG_XMLNS, 'g'),
+            line: document.createElementNS(SVG_XMLNS, 'line'),
+            circleA: document.createElementNS(SVG_XMLNS, 'circle'),
+            circleB: document.createElementNS(SVG_XMLNS, 'circle'),
+          },
+          opacity: 1
+        }
+        flash.display.svg.circleA.r.baseVal.value = flash.line.p1.parallax * 6 + 4;
+        flash.display.svg.circleB.r.baseVal.value = flash.line.p2.parallax * 6 + 4;
+        flash.display.svg.g.appendChild(flash.display.svg.line);
+        flash.display.svg.g.appendChild(flash.display.svg.circleA);
+        flash.display.svg.g.appendChild(flash.display.svg.circleB);
+        this.ref.overlays.appendChild(flash.display.svg.g);
+      } 
+      flash.display.opacity -= frameMs / 2000;
+      if (flash.display.opacity < 0) {
+        flash.display.svg.g.remove();
+        this.lineFlashes.delete(flash);
+      } else {
+        flash.display.svg.g.setAttribute('opacity', flash.display.opacity.toString());
+        if (!closeEnough(flash.display.svg.line.x1.baseVal.value, flash.line.p1.current.x))
+          flash.display.svg.circleA.cx.baseVal.value = flash.display.svg.line.x1.baseVal.value = flash.line.p1.current.x;
+        if (!closeEnough(flash.display.svg.line.y1.baseVal.value, flash.line.p1.current.y))
+          flash.display.svg.circleA.cy.baseVal.value = flash.display.svg.line.y1.baseVal.value = flash.line.p1.current.y;
+        if (!closeEnough(flash.display.svg.line.x2.baseVal.value, flash.line.p2.current.x))
+          flash.display.svg.circleB.cx.baseVal.value = flash.display.svg.line.x2.baseVal.value = flash.line.p2.current.x;
+        if (!closeEnough(flash.display.svg.line.y2.baseVal.value, flash.line.p2.current.y))
+          flash.display.svg.circleB.cy.baseVal.value = flash.display.svg.line.y2.baseVal.value = flash.line.p2.current.y;
+      }
+    })
     this.frameAnimationFrameRequest = requestAnimationFrame(this.frame);
     this.lastFrame = now;
   }
@@ -369,6 +424,7 @@ class Background extends React.Component<Props, {}> {
             <rect className="shine" />
             <g className="ripples" ref={ref => this.ref.ripples = ref} />
           </g>
+          <g className="overlays" ref={ref => this.ref.overlays = ref} />
           <g className="mouseDetection">
             <g className="lines" ref={ref => this.ref.mouseLines = ref} />
           </g>
@@ -439,9 +495,22 @@ export default styled(Background)`
       }
     }
 
+    .overlays {
+      g {
+        circle {
+          fill: #fff;
+        }
+
+        line {
+          stroke-width: 2px;
+          stroke: rgba(255, 255, 255, 0.8);
+        }
+      }
+    }
+
     .mouseDetection {
       .lines line {
-        stroke-width: 6px;
+        stroke-width: 10px;
         stroke: rgba(255, 255, 255, 0);
       }
     }
