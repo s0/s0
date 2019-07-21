@@ -55,7 +55,19 @@ interface Point extends Animated<{x: number; y: number}> {
 interface Line {
   p1: Point;
   p2: Point;
-  svg: SVGLineElement;
+  svg: {
+    mask: SVGLineElement;
+    mouse: SVGLineElement;
+  }
+}
+
+interface Ripple {
+  x: number;
+  y: number;
+  display?: {
+    svg: SVGCircleElement;
+    opacity: number;
+  }
 }
 
 function advanceAnimation<P extends { [id: string]: number }>(target: Animated<P>, advanceMs: number) {
@@ -83,12 +95,16 @@ class Background extends React.Component<Props, {}> {
     svg: SVGElement | null;
     points: SVGGElement | null;
     lines: SVGGElement | null;
+    mouseLines: SVGGElement | null;
     bg: SVGRectElement | null;
+    ripples: SVGGElement | null;
   } = {
     svg: null,
     points: null,
     lines: null,
+    mouseLines: null,
     bg: null,
+    ripples: null,
   }
   private data: {
     points: Map<string, Point>;
@@ -99,6 +115,7 @@ class Background extends React.Component<Props, {}> {
   private mouse: { x: number; y: number } | null = null;
   private lastMouse: { x: number; y: number } | null = null;
   private lastFrame: number | null = null;
+  private ripples = new Set<Ripple>();
 
   public constructor(props: Props) {
     super(props);
@@ -107,6 +124,7 @@ class Background extends React.Component<Props, {}> {
     this.resized = this.resized.bind(this);
     this.frame = this.frame.bind(this);
     this.mouseMove = this.mouseMove.bind(this);
+    this.mouseOverLine = this.mouseOverLine.bind(this);
   }
 
   public componentDidMount() {
@@ -126,26 +144,36 @@ class Background extends React.Component<Props, {}> {
   /**
    * Debounce 
    */
-  public resized() {
+  private resized() {
     if (this.resizeAnimationFrameRequest)
       cancelAnimationFrame(this.resizeAnimationFrameRequest);
     this.resizeAnimationFrameRequest = requestAnimationFrame(this.createElements);
   }
 
-  public mouseMove(e: MouseEvent) {
+  private mouseMove(e: MouseEvent) {
     this.mouse = {
       x: e.pageX,
       y: e.pageY
     }
   }
 
-  public createElements() {
-    if (!this.ref.svg || !this.ref.points || !this.ref.lines || !this.ref.bg) return;
+  private mouseOverLine(e: MouseEvent) {
+    this.ripples.add({
+      x: e.pageX,
+      y: e.pageY
+    })
+  }
+
+  private createElements() {
+    if (!this.ref.svg || !this.ref.points || !this.ref.lines || !this.ref.mouseLines || !this.ref.bg) return;
 
     // clear old elements
     if (this.data) {
       this.data.points.forEach(point => point.svg.remove());
-      this.data.lines.forEach(line => line.svg.remove());
+      this.data.lines.forEach(line => {
+        line.svg.mask.remove();
+        line.svg.mouse.remove();
+      });
     }
 
     const sizing = this.ref.svg.getBoundingClientRect();
@@ -217,17 +245,20 @@ class Background extends React.Component<Props, {}> {
         for (const k of [`${xi - 1},${yi}`, `${xi},${yi - 1}`, `${xi + (offsetX ? 1 : -1)},${yi - 1}`]) {
           const p2 = points.get(k);
           if (p2) {
-            const line = document.createElementNS(SVG_XMLNS, 'line');
+            const mask = document.createElementNS(SVG_XMLNS, 'line');
+            const mouse = document.createElementNS(SVG_XMLNS, 'line');
             lines.push({
               p1: point,
               p2,
-              svg: line
+              svg: { mask, mouse }
             });
-            line.x1.baseVal.value = point.current.x;
-            line.y1.baseVal.value = point.current.y;
-            line.x2.baseVal.value = p2.current.x;
-            line.y2.baseVal.value = p2.current.y;
-            this.ref.lines.appendChild(line);
+            mask.x1.baseVal.value = mouse.x1.baseVal.value = point.current.x;
+            mask.y1.baseVal.value = mouse.y1.baseVal.value = point.current.y;
+            mask.x2.baseVal.value = mouse.x2.baseVal.value = p2.current.x;
+            mask.y2.baseVal.value = mouse.y2.baseVal.value = p2.current.y;
+            this.ref.lines.appendChild(mask);
+            this.ref.mouseLines.appendChild(mouse);
+            mouse.addEventListener('mouseenter', this.mouseOverLine);
           }
         }
       }
@@ -242,7 +273,7 @@ class Background extends React.Component<Props, {}> {
     }
   }
 
-  public frame() {
+  private frame() {
     if (!this.data || !this.ref.svg) return;
     const now = performance.now();
     const frameMs = this.lastFrame ? now - this.lastFrame : 20;
@@ -286,11 +317,34 @@ class Background extends React.Component<Props, {}> {
       if (!closeEnough(point.svg.cy.baseVal.value, point.current.y)) point.svg.cy.baseVal.value = point.current.y;
     }
     for (const line of this.data.lines) {
-      if (!closeEnough(line.svg.x1.baseVal.value, line.p1.current.x)) line.svg.x1.baseVal.value = line.p1.current.x;
-      if (!closeEnough(line.svg.y1.baseVal.value, line.p1.current.y)) line.svg.y1.baseVal.value = line.p1.current.y;
-      if (!closeEnough(line.svg.x2.baseVal.value, line.p2.current.x)) line.svg.x2.baseVal.value = line.p2.current.x;
-      if (!closeEnough(line.svg.y2.baseVal.value, line.p2.current.y)) line.svg.y2.baseVal.value = line.p2.current.y;
+      if (!closeEnough(line.svg.mask.x1.baseVal.value, line.p1.current.x)) line.svg.mask.x1.baseVal.value = line.svg.mouse.x1.baseVal.value = line.p1.current.x;
+      if (!closeEnough(line.svg.mask.y1.baseVal.value, line.p1.current.y)) line.svg.mask.y1.baseVal.value = line.svg.mouse.y1.baseVal.value = line.p1.current.y;
+      if (!closeEnough(line.svg.mask.x2.baseVal.value, line.p2.current.x)) line.svg.mask.x2.baseVal.value = line.svg.mouse.x2.baseVal.value = line.p2.current.x;
+      if (!closeEnough(line.svg.mask.y2.baseVal.value, line.p2.current.y)) line.svg.mask.y2.baseVal.value = line.svg.mouse.y2.baseVal.value = line.p2.current.y;
     }
+    // Add and animate ripples
+    this.ripples.forEach(ripple => {
+      if (!this.ref.ripples) return;
+      if (!ripple.display) {
+        ripple.display = {
+          svg: document.createElementNS(SVG_XMLNS, 'circle'),
+          opacity: 1
+        }
+        ripple.display.svg.cx.baseVal.value = ripple.x;
+        ripple.display.svg.cy.baseVal.value = ripple.y;
+        ripple.display.svg.r.baseVal.value = 1;
+        this.ref.ripples.appendChild(ripple.display.svg);
+      } else {
+        ripple.display.opacity -= frameMs / 1000;
+        if (ripple.display.opacity < 0) {
+          ripple.display.svg.remove();
+          this.ripples.delete(ripple);
+        } else {
+          ripple.display.svg.setAttribute('opacity', ripple.display.opacity.toString());
+          ripple.display.svg.r.baseVal.value += frameMs;
+        }
+      }
+    })
     this.frameAnimationFrameRequest = requestAnimationFrame(this.frame);
     this.lastFrame = now;
   }
@@ -313,6 +367,10 @@ class Background extends React.Component<Props, {}> {
           <g className="gridLayers" mask='url(#grid)'>
             <rect className="bg" ref={ref => this.ref.bg = ref} />
             <rect className="shine" />
+            <g className="ripples" ref={ref => this.ref.ripples = ref} />
+          </g>
+          <g className="mouseDetection">
+            <g className="lines" ref={ref => this.ref.mouseLines = ref} />
           </g>
         </svg>
       </div>
@@ -330,7 +388,7 @@ export default styled(Background)`
 
   @keyframes shine-move {
     0% {
-      x: -20%;
+      x: -40%;
     }
     100% {
       x: 160%;
@@ -377,6 +435,19 @@ export default styled(Background)`
         height: 100%;
         fill: url(#shine);
         animation: shine-move 5s linear infinite;
+      }
+
+      > .ripples circle {
+        fill: rgba(255, 255, 255, 0.2);
+        stroke-width: 50px;
+        stroke: rgba(255, 255, 255, 0.7);
+      }
+    }
+
+    .mouseDetection {
+      .lines line {
+        stroke-width: 6px;
+        stroke: rgba(255, 255, 255, 0);
       }
     }
   }
