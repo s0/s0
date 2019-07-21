@@ -7,23 +7,8 @@ interface Props {
 
 interface Point {
   key: string;
-  xBase: number;
-  yBase: number;
-  /**
-   * How much the point is "wobbling" in pixels
-   */
-  wobble: number;
-  /**
-   * between 0 and 2PI
-   */
-  xWobble: number;
-  /**
-   * between 0 and 2PI
-   */
-  yWobble: number;
-
-  xResult: number;
-  yResult: number;
+  x: number;
+  y: number;
 }
 
 interface Line {
@@ -86,6 +71,8 @@ class Background extends React.Component<Props, State> {
     const xPadding = xInterval;
     const yPadding = yInterval;
 
+    const skew = xInterval / 15;
+
     /**
      * How much the x values of an offset row should be adjusted by
      */
@@ -103,7 +90,6 @@ class Background extends React.Component<Props, State> {
     }
 
     const xMin = x;
-    const yMin = y;
     const xMax = sizing.width + xPadding;
     const yMax = sizing.height + yPadding;
 
@@ -118,14 +104,10 @@ class Background extends React.Component<Props, State> {
           x < xMax;
           xi++, x += xInterval) {
         const key = `${xi},${yi}`
-        const wobble = xInterval / 6;
-        const xWobble = Math.random() * Math.PI * 2, yWobble = Math.random() * Math.PI * 2
         const point: Point = {
           key,
-          xBase: x, yBase: y,
-          wobble, xWobble, yWobble,
-          xResult: x + wobble * Math.sin(xWobble),
-          yResult: y + wobble * Math.sin(yWobble)
+          x: x + (Math.random() - 0.5) * skew,
+          y: y + (Math.random() - 0.5) * skew,
         }
         points.push(point);
         pointsMap.set(key, point);
@@ -155,7 +137,7 @@ class Background extends React.Component<Props, State> {
             { /* Points */ }
             {
               ...this.state.points.map(p => 
-                <circle key={p.key} cx={p.xResult} cy={p.yResult} />  
+                <circle key={p.key} cx={p.x} cy={p.y} />
               )
             }
           </g>
@@ -163,7 +145,7 @@ class Background extends React.Component<Props, State> {
             { /* Lines */}
             {
               ...this.state.lines.map(l =>
-                <line x1={l.p1.xResult} y1={l.p1.yResult} x2={l.p2.xResult} y2={l.p2.yResult} />
+                <line x1={l.p1.x} y1={l.p1.y} x2={l.p2.x} y2={l.p2.y} />
               )
             }
           </g>
