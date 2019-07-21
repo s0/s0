@@ -48,6 +48,7 @@ interface Point extends Animated<{x: number; y: number}> {
     x: number;
     y: number;
   };
+  parallax: number;
   svg: SVGCircleElement;
 }
 
@@ -194,13 +195,16 @@ class Background extends React.Component<Props, {}> {
           x: x + (Math.random() - 0.5) * skew,
           y: y + (Math.random() - 0.5) * skew
         };
+        const parallax = Math.random();
         const point: Point = {
           base,
+          parallax,
           svg: document.createElementNS(SVG_XMLNS, 'circle'),
           current: Object.assign({}, base)
         }
         point.svg.cx.baseVal.value = point.current.x;
         point.svg.cy.baseVal.value = point.current.y;
+        point.svg.r.baseVal.value = (parallax) * 6 + 4;
         this.ref.points.appendChild(point.svg);
         points.set(key, point);
         // Add lines to (potentially) pre-existing points
@@ -233,18 +237,24 @@ class Background extends React.Component<Props, {}> {
   }
 
   public frame() {
-    if (!this.data) return;
+    if (!this.data || !this.ref.svg) return;
     const now = performance.now();
     const frameMs = this.lastFrame ? now - this.lastFrame : 20;
     // Adjust position of points (and hence lines)
     if (this.mouse) {
       if (!this.lastMouse || this.mouse.x !== this.lastMouse.x || this.mouse.y !== this.lastMouse.y) {
         this.lastMouse = this.mouse;
+        const rect = this.ref.svg.getBoundingClientRect();
+        const mouseRatioX = this.mouse.x / rect.width - 0.5;
+        const mouseRatioY = this.mouse.y / rect.height - 0.5;
         for (const point of this.data.points.values()) {
           const dx = point.base.x - this.mouse.x;
           const dy = point.base.y - this.mouse.y;
           const distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+          // Add parralax
           const target = Object.assign({}, point.base);
+          target.x -= mouseRatioX * 50 * (point.parallax + 0.5);
+          target.y -= mouseRatioY * 50 * (point.parallax + 0.5);
           if (distance < AFFECT_DISTANCE) {
             const push = (AFFECT_DISTANCE - distance) / AFFECT_DISTANCE * PUSH_DISTANCE;
             target.x += dx / distance * push;
@@ -339,12 +349,11 @@ export default styled(Background)`
     .gridMask {
       .points circle {
         fill: #fff;
-        r: 5px;
       }
 
       .lines line {
         stroke-width: 2px;
-        stroke: rgba(255, 255, 255, 0.8);
+        stroke: rgba(255, 255, 255, 0.5);
       }
     }
 
