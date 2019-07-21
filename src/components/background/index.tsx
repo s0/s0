@@ -211,7 +211,7 @@ class Background extends React.Component<Props, {}> {
     const xPadding = xInterval;
     const yPadding = yInterval;
 
-    const skew = xInterval / 15;
+    const skew = xInterval / 10;
 
     /**
      * How much the x values of an offset row should be adjusted by
