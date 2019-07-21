@@ -283,9 +283,21 @@ class Background extends React.Component<Props, {}> {
     return (
       <div className={this.props.className}>
         <svg ref={ref => this.ref.svg = ref}>
-
-          <g className="points" ref={ref => this.ref.points = ref} />
-          <g className="lines" ref={ref => this.ref.lines = ref} />
+          <defs>
+            <linearGradient id="shine">
+              <stop className="start" offset="0%" />
+              <stop className="mid" offset="50%" />
+              <stop className="end" offset="100%" />
+            </linearGradient>
+          </defs>
+          <mask className="gridMask" id="grid">
+            <g className="points" ref={ref => this.ref.points = ref} />
+            <g className="lines" ref={ref => this.ref.lines = ref} />
+          </mask>
+          <g className="gridLayers" mask='url(#grid)'>
+            <rect className="bg" />
+            <rect className="shine" />
+          </g>
         </svg>
       </div>
     );
@@ -298,20 +310,61 @@ export default styled(Background)`
   bottom: 0;
   left: 0;
   right: 0;
+  background: #240152;
 
+  @keyframes shine-move {
+    0% {
+      x: -20%;
+    }
+    100% {
+      x: 160%;
+    }
+  }
 
   svg {
     width: 100%;
     height: 100%;
 
-    .points circle {
-      fill: #222;
-      r: 5px;
+    defs {
+      #shine {
+        .start, .end {
+          stop-color: rgba(251, 57, 248, 0);
+        }
+        .mid {
+          stop-color: rgba(251, 57, 248, 0.8);
+        }
+      }
     }
 
-    .lines line {
-      stroke-width: 2px;
-      stroke: #333;
+    .gridMask {
+      .points circle {
+        fill: #fff;
+        r: 5px;
+      }
+
+      .lines line {
+        stroke-width: 2px;
+        stroke: rgba(255, 255, 255, 0.8);
+      }
+    }
+
+    .gridLayers {
+      > .bg {
+        width: 100%;
+        height: 100%;
+        x: 0;
+        y: 0;
+        fill: rgba(177, 0, 174, 0.49);
+      }
+
+      > .shine {
+        x: -20%;
+        y: 0;
+        width: 20%;
+        height: 100%;
+        fill: url(#shine);
+        animation: shine-move 5s linear infinite;
+      }
     }
   }
 `;
