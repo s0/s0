@@ -6,12 +6,19 @@ interface Props {
 }
 
 interface Point {
+  key: string;
   x: number;
   y: number;
 }
 
+interface Line {
+  p1: Point;
+  p2: Point;
+}
+
 interface State {
   points: Point[];
+  lines: Line[];
 }
 
 class Background extends React.Component<Props, State> {
@@ -22,7 +29,8 @@ class Background extends React.Component<Props, State> {
   public constructor(props: Props) {
     super(props);
     this.state = {
-      points: []
+      points: [],
+      lines: []
     };
 
     this.calculatePoints = this.calculatePoints.bind(this);
@@ -50,7 +58,6 @@ class Background extends React.Component<Props, State> {
   public calculatePoints() {
     if (!this.svgRef) return;
     const sizing = this.svgRef.getBoundingClientRect();
-    console.log('calculate resize', sizing.height, sizing.width);
     /**
      * How spread out each dot is along the X
      */
@@ -85,21 +92,37 @@ class Background extends React.Component<Props, State> {
     const xMax = sizing.width + xPadding;
     const yMax = sizing.height + yPadding;
 
-    // Produce the points
+    // Produce the points and lines
     const points: Point[] = [];
+    const pointsMap = new Map<String, Point>();
+    const lines: Line[] = [];
+    let xi:number, yi = 0;
     while (y < yMax) {
       for (
-          x = xMin + (offsetX ? xOffsetAmount : 0);
+          xi = 0, x = xMin + (offsetX ? xOffsetAmount : 0);
           x < xMax;
-          x += xInterval) {
-        points.push({
-          x, y
-        });
+          xi++, x += xInterval) {
+        const key = `${xi},${yi}`
+        const point: Point = {
+          key, x, y
+        }
+        points.push(point);
+        pointsMap.set(key, point);
+        // Add lines to (potentially) pre-existing points
+        for (const k of [`${xi - 1},${yi}`, `${xi},${yi - 1}`, `${xi + (offsetX ? 1 : -1)},${yi - 1}`]) {
+          const p2 = pointsMap.get(k);
+          if (p2) {
+            lines.push({
+              p1: point, p2
+            })
+          }
+        }
       }
       y += yInterval;
+      yi++;
       offsetX = !offsetX;
     }
-    this.setState({points});
+    this.setState({ points, lines});
   }
 
   public render() {
@@ -110,7 +133,13 @@ class Background extends React.Component<Props, State> {
           { /* Points */ }
           {
             ...this.state.points.map(p => 
-              <circle cx={p.x} cy={p.y} r="3" fill='#000' />  
+              <circle key={p.key} cx={p.x} cy={p.y} r="3" fill='#000' />  
+            )
+          }
+          { /* Lines */}
+          {
+            ...this.state.lines.map(l =>
+              <line x1={l.p1.x} y1={l.p1.y} x2={l.p2.x} y2={l.p2.y} stroke='#000' />
             )
           }
         </svg>
