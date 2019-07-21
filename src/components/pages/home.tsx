@@ -81,7 +81,7 @@ class Home extends React.Component<Props, {}> {
                     <a href="https://queeriouslabs.com/" target="_blank">Queerious Labs</a> - A queer, anarchafeminist art+tech community workshop.
                   </li>
                   <li>
-                    Numerous <a href="https://github.com/samlanning" target="_blank">GitHub Repositories</a>.
+                    Numerous <a href="https://github.com/samlanning" target="_blank">GitHub Repositories and Open Source Contributions</a>.
                   </li>
                 </ul>
               </div>
@@ -92,7 +92,7 @@ class Home extends React.Component<Props, {}> {
                     <strong>2011 - 2014</strong> - Computer Science Bachelor's Degree, University of Oxford.
                   </li>
                   <li>
-                    <strong>Feb 2012 - Feb 2014</strong> - Spend 1 year as Secretary, and 1 year as President of the Oxford University Computer Society
+                    <strong>Feb 2012 - Feb 2014</strong> - Spent 1 year as Secretary, and 1 year as President of the Oxford University Computer Society
                   </li>
                   <li>
                     <strong>Nov 2014 - Jul 2015</strong> - Computer Science Specialist Tutor @ <a href="https://www.lvs-oxford.org.uk/" target="_blank">LVS Oxford</a> - a school for young people / children on the autistic spectrum
