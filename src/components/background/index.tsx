@@ -175,15 +175,15 @@ class Background extends React.Component<Props, {}> {
 
   private mouseMove(e: MouseEvent) {
     this.mouse = {
-      x: e.pageX,
-      y: e.pageY
+      x: e.pageX - window.scrollX,
+      y: e.pageY - window.scrollY
     }
   }
 
   private touchMove(e: TouchEvent) {
     this.mouse = {
-      x: e.targetTouches[0].pageX,
-      y: e.targetTouches[0].pageY
+      x: e.targetTouches[0].pageX - window.scrollX,
+      y: e.targetTouches[0].pageY - window.scrollY
     }
   }
 
