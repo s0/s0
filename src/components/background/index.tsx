@@ -143,6 +143,7 @@ class Background extends React.Component<Props, {}> {
     this.resized = this.resized.bind(this);
     this.frame = this.frame.bind(this);
     this.mouseMove = this.mouseMove.bind(this);
+    this.touchMove = this.touchMove.bind(this);
     this.randomFlash = this.randomFlash.bind(this);
   }
 
@@ -152,11 +153,13 @@ class Background extends React.Component<Props, {}> {
     setTimeout(this.randomFlash, RANDOM_FLASH_DELAY_MIN);
     window.addEventListener('resize', this.resized);
     window.addEventListener('mousemove', this.mouseMove);
+    window.addEventListener('touchmove', this.touchMove);
   }
 
   public componentWillUnmount() {
     window.removeEventListener('resize', this.resized);
     window.removeEventListener('mousemove', this.mouseMove);
+    window.removeEventListener('touchmove', this.touchMove);
     if (this.frameAnimationFrameRequest)
       cancelAnimationFrame(this.frameAnimationFrameRequest);
   }
@@ -174,6 +177,13 @@ class Background extends React.Component<Props, {}> {
     this.mouse = {
       x: e.pageX,
       y: e.pageY
+    }
+  }
+
+  private touchMove(e: TouchEvent) {
+    this.mouse = {
+      x: e.targetTouches[0].pageX,
+      y: e.targetTouches[0].pageY
     }
   }
 
