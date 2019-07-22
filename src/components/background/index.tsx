@@ -17,6 +17,9 @@ const AFFECT_DISTANCE = 200;
 const PUSH_DISTANCE = 50;
 const PUSH_ANIM_DURATION = 300;
 
+const RANDOM_FLASH_DELAY_MIN = 1000;
+const RANDOM_FLASH_DELAY_MAX = 5000;
+
 interface Props {
   className?: string;
 }
@@ -140,11 +143,13 @@ class Background extends React.Component<Props, {}> {
     this.resized = this.resized.bind(this);
     this.frame = this.frame.bind(this);
     this.mouseMove = this.mouseMove.bind(this);
+    this.randomFlash = this.randomFlash.bind(this);
   }
 
   public componentDidMount() {
     this.createElements();
     this.frame();
+    setTimeout(this.randomFlash, RANDOM_FLASH_DELAY_MIN);
     window.addEventListener('resize', this.resized);
     window.addEventListener('mousemove', this.mouseMove);
   }
@@ -180,6 +185,21 @@ class Background extends React.Component<Props, {}> {
     this.lineFlashes.add({
       line
     });
+  }
+
+  private randomFlash() {
+    setTimeout(this.randomFlash, RANDOM_FLASH_DELAY_MIN + Math.random() * (RANDOM_FLASH_DELAY_MAX - RANDOM_FLASH_DELAY_MIN));
+    if (!this.data) return;
+    const i = Math.round((this.data.lines.length - 1) * Math.random());
+    const line = this.data.lines[i];
+    if (line) {
+      this.lineFlashes.add({
+        line
+      });
+      const x = (line.p1.current.x + line.p2.current.x) / 2;
+      const y = (line.p1.current.y + line.p2.current.y) / 2;
+      this.ripples.add({x, y});
+    }
   }
 
   private createElements() {
