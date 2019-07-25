@@ -115,6 +115,9 @@ class Home extends React.Component<Props, {}> {
                     Oct 2018 - GitHub Universe Demo Desk - <a href="https://www.youtube.com/watch?v=aXqUWZYlFzs" target="_blank">Finding and preventing bugs with LGTM (Video)</a>
                   </li>
                   <li>
+                    Oct 2018 - Oracle Code One - <a href="https://oracle.rainfocus.com/widget/oracle/oow18/catalogcodeone18?search=DEV5219" target="_blank">How to Avoid 0-Days Due to Unsafe Deserialization [DEV5219] (Joint talk with Oege de Moor &amp; Bas van Schaik)</a>
+                  </li>
+                  <li>
                     May 2019 - RVAsec - <a href="https://rvasec2019.sched.com/event/OAyv/no-more-whack-a-mole-how-to-find-and-prevent-entire-classes-of-security-vulnerabilities" target="_blank">No More Whack-a-Mole: How to Find and Prevent Entire Classes of Security Vulnerabilities</a>
                   </li>
                   <li>
