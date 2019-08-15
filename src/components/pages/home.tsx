@@ -126,6 +126,9 @@ class Home extends React.Component<Props, {}> {
                   <li>
                     Jul 2019 - OSCON - <a href="https://www.youtube.com/watch?v=m6Jr6w0W1xw" target="_blank">Writing npm (JavaScript) libraries using TypeScript (Video)</a>
                   </li>
+                  <li>
+                    Sept 2019 - BalCCon2k19 - <a href="https://2k19.balccon.org/speakers/273.html" target="_blank">No More Whack-a-Mole: How to Find and Prevent Entire Classes of Security Vulnerabilities</a>
+                  </li>
                 </ul>
               </div>
             </div>
