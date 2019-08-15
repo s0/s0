@@ -121,10 +121,10 @@ class Home extends React.Component<Props, {}> {
                     May 2019 - RVAsec - <a href="https://rvasec2019.sched.com/event/OAyv/no-more-whack-a-mole-how-to-find-and-prevent-entire-classes-of-security-vulnerabilities" target="_blank">No More Whack-a-Mole: How to Find and Prevent Entire Classes of Security Vulnerabilities</a>
                   </li>
                   <li>
-                    Jul 2019 - OSCON - <a href="https://conferences.oreilly.com/oscon/oscon-or/public/schedule/detail/75948" target="_blank">How TypeScript is transforming the JavaScript ecosystem</a>
+                    Jul 2019 - OSCON - <a href="https://www.youtube.com/watch?v=b8AHUXxGas8" target="_blank">How TypeScript is transforming the JavaScript ecosystem (Video)</a>
                   </li>
                   <li>
-                    Jul 2019 - OSCON - <a href="https://conferences.oreilly.com/oscon/oscon-or/public/schedule/detail/75953" target="_blank">Writing npm (JavaScript) libraries using TypeScript</a>
+                    Jul 2019 - OSCON - <a href="https://www.youtube.com/watch?v=m6Jr6w0W1xw" target="_blank">Writing npm (JavaScript) libraries using TypeScript (Video)</a>
                   </li>
                 </ul>
               </div>
