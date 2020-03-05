@@ -64,10 +64,10 @@ class Home extends React.Component<Props, {}> {
                   <p>Core Interests: Open Source Software, Security &amp; Privacy, Code Quality, Variant Analysis, Lighting &amp; TypeScript</p>
                   <p>Developer Advocate for <a href="https://semmle.com" target="_blank">Semmle</a></p>
                   <p>
-                    <a href="https://github.com/samlanning" target="_blank">GitHub</a> - <a href="https://www.npmjs.com/~samlanning" target="_blank">NPM</a> - <a href="https://twitter.com/samlanning" target="_blank">Twitter</a> - <a href="https://www.linkedin.com/in/smlanning/" target="_blank">LinkedIn</a>
+                    <a href="https://github.com/s0" target="_blank">GitHub</a> - <a href="https://www.npmjs.com/~s0" target="_blank">NPM</a> - <a href="https://twitter.com/samlanning" target="_blank">Twitter</a> - <a href="https://www.linkedin.com/in/smlanning/" target="_blank">LinkedIn</a>
                   </p>
                   <p>
-                    Email: <a href="mailto:sam@lanni.ng">sam@lanni.ng</a>
+                    Email: <a href="mailto:sam@samlanning.com">sam@samlanning.com</a>
                   </p>
                 </div>
               </div>
@@ -81,7 +81,7 @@ class Home extends React.Component<Props, {}> {
                     <a href="https://queeriouslabs.com/" target="_blank">Queerious Labs</a> - A queer, anarchafeminist art+tech community workshop.
                   </li>
                   <li>
-                    Numerous <a href="https://github.com/samlanning" target="_blank">GitHub Repositories and Open Source Contributions</a>.
+                    Numerous <a href="https://github.com/s0" target="_blank">GitHub Repositories and Open Source Contributions</a>.
                   </li>
                 </ul>
               </div>
@@ -89,16 +89,19 @@ class Home extends React.Component<Props, {}> {
                 <h2>Public Speaking</h2>
                 <ul>
                   <li>
-                    Sep 2019 - BalCCon2k19 - <a href="https://2k19.balccon.org/speakers/273.html" target="_blank">No More Whack-a-Mole: How to Find and Prevent Entire Classes of Security Vulnerabilities</a>
+                    No More Whack-a-Mole: How to Find and Prevent Entire Classes of Security Vulnerabilities:
+                    <ul>
+                      <li><a href="https://www.youtube.com/watch?v=7pXvZsMRVig" target="_blank">Nov 2019 - BLACK ALPS (Video)</a></li>
+                      <li><a href="https://www.youtube.com/watch?v=1wbt1xM9jUc" target="_blank">Sep 2019 - OWASP Global AppSec Amsterdam (Video)</a></li>
+                      <li><a href="https://www.youtube.com/watch?v=HMXa26xJE9Q" target="_blank">Sep 2019 - BalCCon2k19 (Video)</a></li>
+                      <li><a href="https://www.youtube.com/watch?v=IY7fL7Tkxxc" target="_blank">May 2019 - RVAsec (Video)</a></li>
+                    </ul>
                   </li>
                   <li>
                     Jul 2019 - OSCON - <a href="https://www.youtube.com/watch?v=m6Jr6w0W1xw" target="_blank">Writing npm (JavaScript) libraries using TypeScript (Video)</a>
                   </li>
                   <li>
                     Jul 2019 - OSCON - <a href="https://www.youtube.com/watch?v=b8AHUXxGas8" target="_blank">How TypeScript is transforming the JavaScript ecosystem (Video)</a>
-                  </li>
-                  <li>
-                    May 2019 - RVAsec - <a href="https://rvasec2019.sched.com/event/OAyv/no-more-whack-a-mole-how-to-find-and-prevent-entire-classes-of-security-vulnerabilities" target="_blank">No More Whack-a-Mole: How to Find and Prevent Entire Classes of Security Vulnerabilities</a>
                   </li>
                   <li>
                     Oct 2018 - Oracle Code One - <a href="https://oracle.rainfocus.com/widget/oracle/oow18/catalogcodeone18?search=DEV5219" target="_blank">How to Avoid 0-Days Due to Unsafe Deserialization [DEV5219] (Joint talk with Oege de Moor &amp; Bas van Schaik)</a>
@@ -115,10 +118,16 @@ class Home extends React.Component<Props, {}> {
                 <h2>Career</h2>
                 <ul className="bolded">
                   <li>
-                    <strong>Mar 2018 - Present</strong> - Developer Advocate @ <a href="https://semmle.com" target="_blank">Semmle</a>
+                    <strong>Nov 2019 - Present</strong> - Senior Developer Advocate @ <a href="https://github.com" target="_blank">GitHub</a>
                   </li>
                   <li>
-                    <strong>Oct 2014 - Mar 2018</strong> - Software Engineer @ <a href="https://semmle.com" target="_blank">Semmle</a>
+                    <strong>Mar 2018 - Nov 2019</strong> - Developer Advocate @ <a href="https://semmle.com" target="_blank">Semmle</a>
+                  </li>
+                  <li>
+                    <strong>Feb 2018 - Mar 2018</strong> - Senior Software Engineer @ <a href="https://semmle.com" target="_blank">Semmle</a>
+                  </li>
+                  <li>
+                    <strong>Oct 2014 - Feb 2018</strong> - Software Engineer @ <a href="https://semmle.com" target="_blank">Semmle</a>
                   </li>
                   <li>
                     <strong>Nov 2014 - Jul 2015</strong> - Computer Science Specialist Tutor @ <a href="https://www.lvs-oxford.org.uk/" target="_blank">LVS Oxford</a> - a school for young people / children on the autistic spectrum
@@ -208,6 +217,10 @@ export default styled(Home)`
 
           ul {
             margin: ${SPACING}px 0 0;
+
+            ul {
+              margin-bottom: ${SPACING}px;
+            }
 
             &.bolded {
               font-weight: 400;
