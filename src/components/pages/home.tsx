@@ -138,6 +138,9 @@ class Home extends React.Component<Props, {}> {
                   <li>
                     <strong>2011 - 2014</strong> - Computer Science Bachelor's Degree, University of Oxford.
                   </li>
+                  <li>
+                    More details on my <a href="https://www.linkedin.com/in/smlanning/" target="_blank">LinkedIn profile</a>.
+                  </li>
                 </ul>
               </div>
             </div>
