@@ -62,7 +62,7 @@ class Home extends React.Component<Props, {}> {
                   <h1>Sam Lanning</h1>
                   <h2>Software Engineer - Developer Advocate - Speaker - Lighting Designer</h2>
                   <p>Core Interests: Open Source Software, Security &amp; Privacy, Code Quality, Variant Analysis, Lighting &amp; TypeScript</p>
-                  <p>Developer Advocate for <a href="https://semmle.com" target="_blank">Semmle</a></p>
+                  <p>Senior Developer Advocate for <a href="https://github.com" target="_blank">GitHub</a></p>
                   <p>
                     <a href="https://github.com/s0" target="_blank">GitHub</a> - <a href="https://www.npmjs.com/~s0" target="_blank">NPM</a> - <a href="https://twitter.com/samlanning" target="_blank">Twitter</a> - <a href="https://www.linkedin.com/in/smlanning/" target="_blank">LinkedIn</a>
                   </p>
