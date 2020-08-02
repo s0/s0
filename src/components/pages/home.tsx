@@ -61,8 +61,8 @@ class Home extends React.Component<Props, {}> {
                 <div>
                   <h1>Sam Lanning</h1>
                   <h2>Software Engineer - Developer Advocate - Speaker - Lighting Designer</h2>
-                  <p>Core Interests: Open Source Software, Security &amp; Privacy, Code Quality, Variant Analysis, Lighting &amp; TypeScript</p>
-                  <p>Senior Developer Advocate for <a href="https://github.com" target="_blank">GitHub</a></p>
+                  <p>Core Interests: Open Source Software, Security &amp; Privacy, Code Quality, Variant Analysis, Public Sector Software, Lighting &amp; TypeScript</p>
+                  <p>Currently building humanitarian software as an independent contractor.</p>
                   <p>
                     <a href="https://github.com/s0" target="_blank">GitHub</a> - <a href="https://www.npmjs.com/~s0" target="_blank">NPM</a> - <a href="https://twitter.com/samlanning" target="_blank">Twitter</a> - <a href="https://www.linkedin.com/in/smlanning/" target="_blank">LinkedIn</a>
                   </p>
@@ -72,13 +72,10 @@ class Home extends React.Component<Props, {}> {
                 </div>
               </div>
               <div className="section">
-                <h2>Current Endeavours</h2>
+                <h2>Current endeavours</h2>
                 <ul>
                   <li>
                     <a href="https://synesthesia-project.org/" target="_blank">Synesthesia Project</a> - An open source lighting &amp; sound project
-                  </li>
-                  <li>
-                    <a href="https://queeriouslabs.com/" target="_blank">Queerious Labs</a> - A queer, anarchafeminist art+tech community workshop.
                   </li>
                   <li>
                     Numerous <a href="https://github.com/s0" target="_blank">GitHub Repositories and Open Source Contributions</a>.
@@ -86,7 +83,18 @@ class Home extends React.Component<Props, {}> {
                 </ul>
               </div>
               <div className="section">
-                <h2>Public Speaking</h2>
+                <h2>Previous endeavours</h2>
+                <ul>
+                  <li>
+                    <a href="https://reach4help.org/" target="_blank">Reach4Help</a> - A global volunteer-run initiative bridging the gap between people in need and volunteers who can help through the COVID-19 pandemic and beyond.
+                  </li>
+                  <li>
+                    <a href="https://queeriouslabs.com/" target="_blank">Queerious Labs</a> - A queer, anarchafeminist art+tech community workshop.
+                  </li>
+                </ul>
+              </div>
+              <div className="section">
+                <h2>Public speaking</h2>
                 <ul>
                   <li>
                     No More Whack-a-Mole: How to Find and Prevent Entire Classes of Security Vulnerabilities:
@@ -118,7 +126,10 @@ class Home extends React.Component<Props, {}> {
                 <h2>Career</h2>
                 <ul className="bolded">
                   <li>
-                    <strong>Nov 2019 - Present</strong> - Senior Developer Advocate @ <a href="https://github.com" target="_blank">GitHub</a>
+                    <strong>May 2020 - Present</strong> - Independent Contractor (Senior Developer) for <a href="https://www.unocha.org/" target="_blank">United Nations OCHA</a>
+                  </li>
+                  <li>
+                    <strong>Nov 2019 - May 2018</strong> - Senior Developer Advocate @ <a href="https://github.com" target="_blank">GitHub</a>
                   </li>
                   <li>
                     <strong>Mar 2018 - Nov 2019</strong> - Developer Advocate @ <a href="https://semmle.com" target="_blank">Semmle</a>
