@@ -1,4 +1,4 @@
-![](header.svg)
+![](https://github.com/s0/s0/raw/main/header.svg)
 
 ## Find me on...
 
