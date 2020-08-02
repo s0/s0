@@ -19,7 +19,7 @@
 * [Queerious Labs](https://queeriouslabs.com/) -
   A queer, anarchafeminist art+tech community workshop.
 
-## Public Speaking
+## Public speaking
 
 * No More Whack-a-Mole: How to Find and Prevent Entire Classes of Security
   Vulnerabilities:
