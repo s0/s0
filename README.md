@@ -11,7 +11,7 @@
 * [Synesthesia Project](https://synesthesia-project.org/) -
   An open source lighting &amp; sound project
 
-## Actions
+## GitHub Actions
 
 ### [Push git subdirectory as branch](https://github.com/marketplace/actions/push-git-subdirectory-as-branch)
 
