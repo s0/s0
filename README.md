@@ -13,9 +13,13 @@
 
 ## GitHub Actions
 
-### [Push git subdirectory as branch](https://github.com/marketplace/actions/push-git-subdirectory-as-branch)
+### [`git-publish-subdir-action` - Push git subdirectory as branch](https://github.com/marketplace/actions/push-git-subdirectory-as-branch)
 
-[![](https://github.com/s0/git-publish-subdir-action/workflows/Scheduled%20tests/badge.svg)](https://github.com/s0/git-publish-subdir-action/actions?workflow=Scheduled+tests) [![codecov](https://codecov.io/gh/s0/git-publish-subdir-action/branch/master/graph/badge.svg)](https://codecov.io/gh/s0/git-publish-subdir-action)
+[![](https://github.com/s0/git-publish-subdir-action/workflows/Scheduled%20tests/badge.svg)](https://github.com/s0/git-publish-subdir-action/actions?workflow=Scheduled+tests) [![codecov](https://codecov.io/gh/s0/git-publish-subdir-action/branch/develop/graph/badge.svg)](https://codecov.io/gh/s0/git-publish-subdir-action)
+
+### [`libyear-node-action` - Node dependency libyear stats & PR checks](https://github.com/marketplace/actions/node-dependency-libyear-stats-pr-checks)
+
+[![codecov](https://codecov.io/gh/s0/libyear-node-action/branch/develop/graph/badge.svg)](https://codecov.io/gh/s0/libyear-node-action)
 
 ## NPM Packages
 
