@@ -1,47 +1,9 @@
+'use client';
 import * as React from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import Image from "next/image";
+import styled from 'styled-components';
 
 import Background from '../background';
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 23px;
-    font-weight: 500;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  h1, h2, h3, h4 {
-    margin: 0;
-    padding: 0;
-    font-weight: 500;
-  }
-
-  h1 {
-    font-size: 30px;
-  }
-
-  h2 {
-    font-size: 20px;
-  }
-
-  p, ul {
-    font-size: 17px;
-  }
-
-  a {
-    color: inherit;
-    opacity: 0.7;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-`
 
 interface Props {
   className?: string;
@@ -51,13 +13,12 @@ class Home extends React.Component<Props, {}> {
   public render() {
     return (
       <div className={this.props.className}>
-        <GlobalStyle/>
         <Background className="background" />
         <div className="content">
           <div className="inner">
             <div className="container">
               <div className="top">
-                <img src="images/sam_250x2.png" height="250" />
+                <Image src="/images/sam_250x2.png" height="250" width="163" alt="Sam Lanning" />
                 <div>
                   <h1>Sam Lanning</h1>
                   <h2>Software Engineer - Developer Advocate - Speaker - Lighting Designer</h2>
