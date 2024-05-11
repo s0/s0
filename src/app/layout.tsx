@@ -2,11 +2,11 @@ import StyledComponentsRegistry from "../lib/registry";
 
 import type { Metadata } from "next";
 import "./globals.css";
+import { SUBTITLE, TITLE } from "./components/pages/home";
 
 export const metadata: Metadata = {
-  title: "Sam Lanning",
-  description:
-    "Software Engineer - Developer Advocate - Speaker - Lighting Designer",
+  title: TITLE,
+  description: SUBTITLE,
 };
 
 export default function RootLayout({

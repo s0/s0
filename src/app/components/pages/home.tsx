@@ -9,6 +9,10 @@ interface Props {
   className?: string;
 }
 
+
+export const TITLE = "Sam Lanning";
+export const SUBTITLE = "Software Engineer - Security Engineer - Speaker - Lighting Designer";
+
 const Home: React.FunctionComponent<Props> = ({ className }) => (
   <div className={className}>
     <Background />
@@ -20,23 +24,17 @@ const Home: React.FunctionComponent<Props> = ({ className }) => (
               src="/images/sam_250x2.png"
               height="250"
               width="163"
-              alt="Sam Lanning"
+              alt={TITLE}
             />
             <div>
-              <h1>Sam Lanning</h1>
-              <h2>
-                Software Engineer - Developer Advocate - Speaker - Lighting
-                Designer
-              </h2>
+              <h1>{TITLE}</h1>
+              <h2>{SUBTITLE}</h2>
               <p>
-                Core Interests: Open Source Software, Security &amp; Privacy,
-                Code Quality, Variant Analysis, Public Sector Software, Lighting
-                &amp; TypeScript
+                Core Interests: Open Source Software, Security, SDLC &amp;
+                DevEx, Code Quality, Public Sector Software, Lighting &amp;
+                TypeScript
               </p>
-              <p>
-                Currently building humanitarian software as an independent
-                contractor.
-              </p>
+              <p>Currently securing the software at Wise.</p>
               <p>
                 <a href="https://github.com/s0" target="_blank">
                   GitHub
@@ -44,10 +42,6 @@ const Home: React.FunctionComponent<Props> = ({ className }) => (
                 -{" "}
                 <a href="https://www.npmjs.com/~s0" target="_blank">
                   NPM
-                </a>{" "}
-                -{" "}
-                <a href="https://twitter.com/samlanning" target="_blank">
-                  Twitter
                 </a>{" "}
                 -{" "}
                 <a
@@ -64,14 +58,8 @@ const Home: React.FunctionComponent<Props> = ({ className }) => (
             </div>
           </div>
           <div className="section">
-            <h2>Current endeavours</h2>
+            <h2>Previous endeavours</h2>
             <ul>
-              <li>
-                <a href="https://synesthesia-project.org/" target="_blank">
-                  Synesthesia Project
-                </a>{" "}
-                - An open source lighting &amp; sound project
-              </li>
               <li>
                 Numerous{" "}
                 <a href="https://github.com/s0" target="_blank">
@@ -79,11 +67,12 @@ const Home: React.FunctionComponent<Props> = ({ className }) => (
                 </a>
                 .
               </li>
-            </ul>
-          </div>
-          <div className="section">
-            <h2>Previous endeavours</h2>
-            <ul>
+              <li>
+                <a href="https://synesthesia-project.org/" target="_blank">
+                  Synesthesia Project
+                </a>{" "}
+                - An open source lighting &amp; sound project
+              </li>
               <li>
                 <a href="https://reach4help.org/" target="_blank">
                   Reach4Help
@@ -100,9 +89,33 @@ const Home: React.FunctionComponent<Props> = ({ className }) => (
               </li>
             </ul>
           </div>
+
+          <div className="section">
+            <h2>Educational Content</h2>
+            <ul>
+              <li>
+                <a
+                  href="https://s0.github.io/teaching-resources/"
+                  target="_blank"
+                >
+                  Resources for teaching Coding & Computer Science
+                </a>
+              </li>
+            </ul>
+          </div>
           <div className="section">
             <h2>Public speaking</h2>
             <ul>
+              <li>
+                Jan 2023 - Refresh -{" "}
+                <a
+                  href="https://www.youtube.com/watch?v=pGKVVFnnaC0"
+                  target="_blank"
+                >
+                  Why Use TypeScript and How to Migrate Your Large Projects
+                  (Video)
+                </a>
+              </li>
               <li>
                 No More Whack-a-Mole: How to Find and Prevent Entire Classes of
                 Security Vulnerabilities:
@@ -194,7 +207,21 @@ const Home: React.FunctionComponent<Props> = ({ className }) => (
             <h2>Career</h2>
             <ul className="bolded">
               <li>
-                <strong>May 2020 - Present</strong> - Independent Contractor
+                <strong>Dec 2023 - current</strong> - Staff Software Security
+                Engineer @{" "}
+                <a href="https://wise.com" target="_blank">
+                  Wise
+                </a>
+              </li>
+              <li>
+                <strong>Feb 2022 - Dec 2023</strong> - Senior Software Security
+                Engineer @{" "}
+                <a href="https://wise.com" target="_blank">
+                  Wise
+                </a>
+              </li>
+              <li>
+                <strong>May 2020 - Dec 2021</strong> - Independent Contractor
                 (Senior Developer) for{" "}
                 <a href="https://www.unocha.org/" target="_blank">
                   United Nations OCHA
