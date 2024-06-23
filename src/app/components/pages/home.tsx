@@ -3,8 +3,6 @@ import * as React from "react";
 import Image from "next/image";
 import styled from "styled-components";
 
-import {Background} from "../background";
-
 interface Props {
   className?: string;
 }
@@ -14,7 +12,6 @@ export const SUBTITLE = "Software Engineer - Security Engineer - Speaker - Light
 
 const Home: React.FunctionComponent<Props> = ({ className }) => (
   <div className={className}>
-    <Background />
     <div className="content">
       <div className="inner">
         <div className="container">

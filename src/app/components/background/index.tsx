@@ -2,6 +2,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import bezierEasing from "bezier-easing";
+import { usePathname } from "next/navigation";
 
 const EASE_OUT = bezierEasing(0.0, 0.0, 0.2, 1);
 
@@ -20,6 +21,8 @@ const PUSH_ANIM_DURATION = 300;
 
 const RANDOM_FLASH_DELAY_MIN = 1000;
 const RANDOM_FLASH_DELAY_MAX = 5000;
+const DARK_HIGHLIGHT = "#222222";
+const TRANSITION = "0.3s";
 
 const RootDiv = styled.div`
   position: fixed;
@@ -30,6 +33,8 @@ const RootDiv = styled.div`
   
   background: #240152;
   background: linear-gradient(#460152, #240152);
+  transition: background ${TRANSITION};
+  // TODO: migrate background gradient to SVG to allow for transition
 
   @keyframes shine-move {
     0% {
@@ -72,6 +77,7 @@ const RootDiv = styled.div`
         x: 0;
         y: 0;
         fill: rgba(177, 0, 174, 0.49);
+        transition: fill ${TRANSITION};
       }
 
       > .shine {
@@ -87,6 +93,7 @@ const RootDiv = styled.div`
         fill: rgba(255, 255, 255, 0.2);
         stroke-width: 50px;
         stroke: rgba(255, 255, 255, 0.7);
+        transition: fill ${TRANSITION}, stroke ${TRANSITION};
       }
     }
 
@@ -94,11 +101,13 @@ const RootDiv = styled.div`
       g {
         circle {
           fill: #fff;
+          transition: fill ${TRANSITION}, stroke ${TRANSITION};
         }
 
         line {
           stroke-width: 2px;
           stroke: rgba(255, 255, 255, 0.8);
+          transition: fill ${TRANSITION}, stroke ${TRANSITION};
         }
       }
     }
@@ -107,6 +116,55 @@ const RootDiv = styled.div`
       .lines line {
         stroke-width: 10px;
         stroke: rgba(255, 255, 255, 0);
+        transition: fill ${TRANSITION}, stroke ${TRANSITION};
+      }
+    }
+  }
+
+  &.mode-dark {
+    background: #111111;
+    background: linear-gradient(#161616, #060606);
+    // TODO: migrate background gradient to SVG to allow for transition
+
+    svg {
+      defs {
+        #shine {
+          .start,
+          .end {
+            stop-color: rgba(0, 0, 0, 0);
+          }
+          .mid {
+            stop-color: ${DARK_HIGHLIGHT};
+          }
+        }
+      }
+
+      .gridLayers {
+        > .bg {
+          fill: #161616;
+        }
+
+        > .ripples circle {
+          fill: ${DARK_HIGHLIGHT};
+          stroke: ${DARK_HIGHLIGHT};
+        }
+      }
+
+      .overlays {
+        g {
+          circle {
+            fill: ${DARK_HIGHLIGHT};
+          }
+          line {
+            stroke: ${DARK_HIGHLIGHT};
+          }
+        }
+      }
+
+      .mouseDetection {
+        .lines line {
+          stroke: rgba(255, 255, 255, 0);
+        }
       }
     }
   }
@@ -196,7 +254,9 @@ function advanceAnimation<P extends { [id: string]: number }>(
   }
 }
 
-export const Background: React.FunctionComponent = () => {
+export const Background: React.FunctionComponent<Record<never, never>> = () => {
+  const pathname = usePathname();
+  const mode = pathname === '/' ? 'default' : 'dark';
 
   const refs = {
     svg: React.useRef<SVGSVGElement>(null),
@@ -585,7 +645,7 @@ export const Background: React.FunctionComponent = () => {
   }, []);
 
   return (
-    <RootDiv>
+    <RootDiv className={`mode-${mode}`}>
       <svg ref={refs.svg}>
         <defs>
           <linearGradient id="shine">

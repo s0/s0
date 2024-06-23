@@ -30,7 +30,7 @@ const PATHS: Array<{
     type: 'internal',
   },
   {
-    href: "https://s0.github.io/teaching-resources/",
+    href: "/content",
     contents: "Educational Content",
     type: 'internal',
   },
