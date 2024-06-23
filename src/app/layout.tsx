@@ -1,6 +1,8 @@
+import { Analytics } from "@vercel/analytics/react"
+import type { Metadata } from "next";
+
 import StyledComponentsRegistry from "../lib/registry";
 
-import type { Metadata } from "next";
 import "./globals.css";
 import { SUBTITLE, TITLE } from "./components/pages/home";
 
@@ -15,10 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body >
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
-      </body>
-    </html>
+    <>
+      <Analytics />
+      <html lang="en">
+        <body>
+          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        </body>
+      </html>
+    </>
   );
 }
