@@ -19,11 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <Analytics />
-      <SpeedInsights />
       <html lang="en">
         <body>
           <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+          <Analytics />
+          <SpeedInsights />
         </body>
       </html>
     </>
