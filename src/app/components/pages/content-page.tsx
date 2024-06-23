@@ -7,4 +7,8 @@ export const PageContent = styled.div`
   position: relative;
   z-index: 0;
   padding: 20px;
+
+  a {
+    color: #fb5ff8;
+  }
 `;
