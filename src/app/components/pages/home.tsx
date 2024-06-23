@@ -85,20 +85,6 @@ const Home: React.FunctionComponent<Props> = ({ className }) => (
               </li>
             </ul>
           </div>
-
-          <div className="section">
-            <h2>Educational Content</h2>
-            <ul>
-              <li>
-                <a
-                  href="https://s0.github.io/teaching-resources/"
-                  target="_blank"
-                >
-                  Resources for teaching Coding & Computer Science
-                </a>
-              </li>
-            </ul>
-          </div>
           <div className="section">
             <h2>Public speaking</h2>
             <ul>
