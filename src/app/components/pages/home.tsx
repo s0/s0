@@ -9,7 +9,6 @@ interface Props {
   className?: string;
 }
 
-
 export const TITLE = "Sam Lanning";
 export const SUBTITLE = "Software Engineer - Security Engineer - Speaker - Lighting Designer";
 

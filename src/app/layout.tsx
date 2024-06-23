@@ -6,6 +6,7 @@ import StyledComponentsRegistry from "../lib/registry";
 
 import "./globals.css";
 import { SUBTITLE, TITLE } from "./components/pages/home";
+import { Navigation } from "./components/navigation";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -21,7 +22,10 @@ export default function RootLayout({
     <>
       <html lang="en">
         <body>
-          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+          <StyledComponentsRegistry>
+            <Navigation />
+            {children}
+          </StyledComponentsRegistry>
           <Analytics />
           <SpeedInsights />
         </body>
