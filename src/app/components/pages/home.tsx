@@ -189,7 +189,19 @@ const Home: React.FunctionComponent<Props> = ({ className }) => (
             <h2>Career</h2>
             <ul className="bolded">
               <li>
-                <strong>Dec 2023 - current</strong> - Staff Software Security
+                <strong>Apr 2025 - current</strong> - Head of Product &amp; Tech @{" "}
+                <a href="https://boilerroom.tv" target="_blank">
+                  Boiler Room
+                </a>
+              </li>
+              <li>
+                <strong>Nov 2024 - Mar 2025</strong> - Lead Full Stack Developer @{" "}
+                <a href="https://boilerroom.tv" target="_blank">
+                  Boiler Room
+                </a>
+              </li>
+              <li>
+                <strong>Dec 2023 - Nov 2024</strong> - Staff Software Security
                 Engineer @{" "}
                 <a href="https://wise.com" target="_blank">
                   Wise
