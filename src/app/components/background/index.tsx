@@ -254,10 +254,11 @@ function advanceAnimation<P extends { [id: string]: number }>(
   }
 }
 
-export const Background: React.FunctionComponent<Record<never, never>> = () => {
-  const pathname = usePathname();
-  const mode = pathname === '/' ? 'default' : 'dark';
+type BackgroundProps = {
+  mode: "default" | "dark";
+};
 
+export const Background: React.FC<BackgroundProps> = ({mode}) => {
   const refs = {
     svg: React.useRef<SVGSVGElement>(null),
     points: React.useRef<SVGGElement>(null),
