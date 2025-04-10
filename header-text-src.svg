@@ -6,7 +6,7 @@
    version="1.1"
    viewBox="0 0 211.667 66.146"
    sodipodi:docname="header-text-src.svg"
-   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
+   inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -67,15 +67,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="2556"
-     inkscape:window-height="1310"
+     inkscape:window-width="1728"
+     inkscape:window-height="1051"
      id="namedview1369"
      showgrid="false"
      inkscape:zoom="6.4240828"
-     inkscape:cx="97.290153"
-     inkscape:cy="32.845156"
+     inkscape:cx="124.22007"
+     inkscape:cy="45.298295"
      inkscape:window-x="0"
-     inkscape:window-y="40"
+     inkscape:window-y="38"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg8"
      inkscape:showpageshadow="2"
@@ -134,11 +134,9 @@
        id="tspan1395-4-6"
        x="44.976383"
        y="55.742439"
-       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:Montserrat;-inkscape-font-specification:'Montserrat Medium';fill:#ffffff;stroke-width:0.0815691">Currently: Staff Security Engineer, building and securing software @ <tspan
+       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:Montserrat;-inkscape-font-specification:'Montserrat Medium';fill:#ffffff;stroke-width:0.0815691">Currently: Head of Product &amp; Tech @ <tspan
    style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Montserrat;-inkscape-font-specification:'Montserrat Bold'"
-   id="tspan1">Wise</tspan> <tspan
-   style="font-size:2.90013px"
-   id="tspan5">(formerly TransferWise)</tspan></tspan></text>
+   id="tspan7">Boiler Room</tspan></tspan></text>
   <text
      id="text1397-8-0-3"
      y="34.729931"
@@ -171,12 +169,16 @@
    id="tspan1805"
    style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Montserrat;-inkscape-font-specification:'Montserrat Bold';stroke-width:0.0815691">Semmle</tspan>, Senior Developer @ <tspan
    id="tspan1807"
-   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Montserrat;-inkscape-font-specification:'Montserrat Bold';stroke-width:0.0815691">Semmle,</tspan></tspan><tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Montserrat;-inkscape-font-specification:'Montserrat Bold';stroke-width:0.0815691">Semmle</tspan></tspan><tspan
        sodipodi:role="line"
        x="44.790405"
        y="49.631176"
        style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:Montserrat;-inkscape-font-specification:'Montserrat Medium';fill:#ffffff;stroke-width:0.0815691"
-       id="tspan2">                   and Senior Software Engineer @ <tspan
+       id="tspan2">               and @ <tspan
    style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Montserrat;-inkscape-font-specification:'Montserrat Bold'"
-   id="tspan3">United Nations OCHA</tspan>  </tspan></text>
+   id="tspan3">United Nations OCHA</tspan>, Staff Security Engineer @ <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Montserrat;-inkscape-font-specification:'Montserrat Bold'"
+   id="tspan4">Wise</tspan> <tspan
+   style="font-size:2.53333px"
+   id="tspan6">(formerly TransferWise)</tspan>  </tspan></text>
 </svg>

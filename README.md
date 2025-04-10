@@ -2,9 +2,9 @@
 
 ## Find me on...
 
-* [NPM](https://www.npmjs.com/~s0)
-* [Twitter](https://twitter.com/samlanning)
 * [LinkedIn](https://www.linkedin.com/in/smlanning/)
+* [NPM](https://www.npmjs.com/~s0)
+* [Bluesky](https://bsky.app/profile/samlanning.com)
 
 ## Previous endeavours
 
